@@ -1,9 +1,8 @@
-## THE MARSAGLIA RANDOM NUMBER CDROM
-### Including the Diehard Battery of Tests of Randomness
+# THE MARSAGLIA RANDOM NUMBER CDROM
 
-In 1995, [George Marsaglia](https://en.wikipedia.org/wiki/George_Marsaglia), a professor in the Department of Statistics at Florida State University created [`Diehard`](https://en.wikipedia.org/wiki/Diehard_tests), a set of statistical tests to determine the quality of a sequence of random values. Marsaglia originally released the software on a CD-ROM, pressed in an edition of "several hundred copies" and given away for free, along with 60 files containing a total of 4.8-billion random bits, an "unassailable source for those who absolutely positively have to have a large, reliable set of random numbers of serious simulation studies."
+In 1995, [George Marsaglia](https://en.wikipedia.org/wiki/George_Marsaglia), a professor in the Department of Statistics at Florida State University created [`Diehard`](https://en.wikipedia.org/wiki/Diehard_tests), a set of statistical tests to determine the quality of a sequence of random values. Marsaglia originally released the software on a CD-ROM with the rather long title "The Marsaglia Random Number CDROM, Including the Diehard Battery of Tests of Randomness," pressed in an edition of "several hundred copies" and given away for free. The CD-ROM also included 60 files containing a total of 4.8-billion random bits, an "unassailable source for those who absolutely positively have to have a large, reliable set of random numbers of serious simulation studies."
 
-This re-creation of the 1995 CD-ROM comes mainly from the [Wayback Machine archive of Marsaglia's FTP site](https://web.archive.org/web/20160119150146/http://stat.fsu.edu/pub/diehard/cdrom/) at FSU. But since that archive is difficult to download in bulk, I've provided it here for historical research and general random number digging.
+This re-creation of the CD-ROM comes mainly from the [Wayback Machine archive of Marsaglia's FTP site](https://web.archive.org/web/20160119150146/http://stat.fsu.edu/pub/diehard/cdrom/) at FSU. But since that archive is difficult to download in bulk, I've provided it here for historical research, with some additional files.
 
 Included in this repo:  
 * **`CD-ROM`:** the full contents of the original CD-ROM  
