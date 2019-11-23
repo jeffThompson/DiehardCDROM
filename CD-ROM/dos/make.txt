@@ -1,0 +1,282 @@
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     :: This program creates a binary file containing 11+ megabytes   ::
+     :: of 32-bit integers from a multiply-with-carry  generator      ::
+     ::            x(n)=a*x(n-1)+carry mod 2^32                       ::
+     :: You choose the multiplier from a list and specify the name of ::
+     :: the file to be created.   The period of the generator will be ::
+     :: a*2^31-1.  This class of generators is particularly well sui- ::
+     :: ted for implementation in machine language, and I predict     ::
+     :: that many system generators in the future will be of this     ::
+     :: class rather than the linear congruential generators for mo-  ::
+     :: dulus 2^32 that are common today.                             ::
+     ::       To illustrate how the `carry' works, suppose from the   ::
+     :: current (32-bit) x and (30 bit) c, one forms a*x+c.  This may ::
+     :: be done in a 64-(or double 32-) bit register in most modern   ::
+     :: CPU's.  Then the new random x is the lower 32 bits, the new   ::
+     :: carry the upper 32.  To see how well such a simple and fast   ::                                     ::
+     :: generator performs on tests of randomness, this program makes ::
+     :: a large file with the multiply-with-carry generator implemen- ::
+     :: ted in 16-bit integer arithmetic.  Those finding it suitable  ::
+     :: may wish to make an assembler version for their system.       ::
+     ::       It seems to pass all tests.                             ::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     ::   This program creates the binary file mwc1616.32, containing ::
+     :: 11+ megabytes of integers made by concatenating two 16-bit    ::
+     :: multiply-with-carry generators.                               ::
+     :: The two generators have the form                              ::
+     ::           x(n)=a*x(n-1)+carry mod 2^16      and               ::
+     ::           y(n)=b*y(n-1)+carry mod 2^16,                       ::
+     :: with suggested choices for multipliers `a' and `b'.           ::
+     :: The `carry'  c works as follows:  If a and x are 16-bit  and  ::
+     :: c at most 14 bits, then forming a*x+c produces an at-most 31- ::
+     :: bit result.  That result mod 2^16 (the rightmost 16 bits) is  ::
+     :: the new x and the topmost 16 bits the new carry c.  The sequ- ::
+     :: ence of resulting x's has period the order of 2^16 in the     ::
+     :: group of residues relatively prime to m=a*2^16-1, which will  ::
+     :: be a*2^15-1 for the multipliers suggested here.               ::
+     :: You will be prompted to choose a and b and two seeds.  Output ::
+     :: is a 32-bit integer, the pair x,y side by side.               ::
+     :: This multiply-with-carry generator is best done in assembler, ::
+     :: where it takes about 200 nanosecs with a Pentium 120. A Fort- ::
+     :: ran version takes about 300 ns.  It seems to pass all tests   ::
+     :: and is highly recommended for speed and simplicity.           ::
+     ::   The essence of a version in C requires only two statements: ::
+     ::     x=a*(x&65535)+(x>>16); y=b*(y&65535)+(y>>16);             ::
+     :: if x and y are 32-bit integers with carry in the top and out- ::
+     :: put in the bottom half.  The 32-bit integer returned is       ::
+     ::          (x<<16)+(y&65525);                                   ::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+         :: ----------------------------------------------------------- ::
+         :: 18000 18030 18273 18513 18879 19074 19098 19164 19215 19584 ::
+         :: 19599 19950 20088 20508 20544 20664 20814 20970 21153 21243 ::
+         :: 21423 21723 21954 22125 22188 22293 22860 22938 22965 22974 ::
+         :: 23109 23124 23163 23208 23508 23520 23553 23658 23865 24114 ::
+         :: 24219 24660 24699 24864 24948 25023 25308 25443 26004 26088 ::
+         :: 26154 26550 26679 26838 27183 27258 27753 27795 27810 27834 ::
+         :: 27960 28320 28380 28689 28710 28794 28854 28959 28980 29013 ::
+         :: 29379 29889 30135 30345 30459 30714 30903 30963 31059 31083 ::
+         :: ----------------------------------------------------------- ::
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        :: This program creates a binary file, mthr4.32, with 11 mgbytes::
+        :: of 32-bit integers from the multiply-with-carry generator    ::
+
+      x(n)=2111111111x(n-4)+1492x(n-3)+1776x(n-2)+5115x(n-1)+carry mod 2^32.
+
+        :: The period of this generator is  about 2^160.  It is one of  ::
+        :: what I called "The Mother of All Random Number Generators",  ::
+        :: a few years ago when use of `Mother of All...' was topical   ::
+        :: and could be used  for showing bombast, defiance or derision.::
+        :: All apply to the usage here.   The `carry' part, c, is the   ::
+        :: multiple of the modulus b=2^32  dropped in the reduction; for::
+        :: example, if the linear combination with the current four x's ::
+        :: and carry c produced the result  125*b+3621, then the new x  ::
+        :: becomes 3621 and the new carry 125. The big advantage of this::
+        :: and other multiply-with-carry generators is that they allow  ::
+        :: use of modulus 2^16 & 2^32 without the trailing-bits regular-::
+        :: ities encountered in congruential sequences for such moduli. ::
+        :: But that advantage has to be gained through assembly language::
+        :: if b=2^32, as no common high level language seems to allow   ::
+        :: access to the top 32 bits of the 64-bit product of two 32-bit::
+        :: integers. See also the file make1616.exe and makemwc1.exe    ::
+        ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     ::    This program creates the binary file kiss.32, containing     ::
+     ::  11+ megabytes of integers from the generator KISS, which com-  ::
+     ::  bines three simple generators.  The acronym KISS means         ::
+     ::               Keep It Simple Stupid                             ::
+     ::  and the idea is to use simple, fast, individually promising    ::
+     ::  generators to get a composite that will be fast, easy to code  ::
+     ::  have a very long period and pass all the tests put to it.      ::
+     ::  The three components of KISS are                               ::
+     ::               x(n)=a*x(n-1)+1 mod 2^32                          ::
+     ::               y(n)=y(n-1)(I+L^13)(I+R^17)(I+L^5),               ::
+     ::               z(n)=2*z(n-1)+z(n-2) +carry mod 2^32              ::
+     ::  The y's are a shift register sequence on 32bit binary vectors  ::
+     ::  period 2^32-1; see the description in executing makesupr.exe.  ::
+     ::  The z's are a simple multiply-with-carry sequence with period  ::
+     ::  2^63+2^32-1.  The period of KISS is thus                       ::
+     ::       2^32*(2^32-1)*(2^63+2^32-1) > 2^127                       ::
+     ::  KISS is particularly well suited for assembler programming,    ::
+     ::  where it takes about 200 nanosecs with a Pentium 120.          ::
+     ::    It seems to pass all tests and is highly recommended  for    ::
+     ::   speed and simplicity (for generators with that long a period) ::
+     :: ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     ::   This program creates the binary file COMBO.32, containing   ::
+     :: 11+ megabytes of integers from a simple but very good combi-  ::
+     :: nation generator.  It combines, by addition mod 2^32,         ::
+     ::             x(n)=x(n-1)*x(n-2) mod 2^32                       ::
+     ::    and                                                        ::
+     ::             y(n)=30903*y(n-1) + carry mod 2^16                ::
+     :: The period of the first is 3*2^29, on odd integers, and the   ::
+     :: period of the second, a multiply-with-carry generator, is     ::              ::
+     :: 30903*2^15-1=1012629503, so the period of combo exceeds 2^60. ::
+     :: This generator is simple to program in Fortran or C and quite ::
+     :: fast.   It seems to pass all tests in DIEHARD.  Try it.       ::
+     :: You will be prompted for three seed integers.  The x's of the ::
+     :: seeds x1,x2,y must be 3 or 5 mod 8, which is ensured by repla-::
+     :: cing  x1 by 3*(x1+x1+1)^2 and x2 by 2*x2+1.                   ::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     :: This program creates a binary file of integers from a version   ::
+     :: of ULTRA,  a generator we posted on the net a few years ago.    ::
+     :: It combines the lagged Fibonacci generator                      ::
+     ::        x(n)=x(n-99)*x(n-33)  mod 2^32, x's odd                  ::
+     :: with the multiply-with-carry generator                          ::
+     ::        y(n)=30903*y(n-1)+carry mod 2^16,                        ::
+     :: returning x(n)+y(n) mod 2^32.                                   ::
+     :: By itself, the lagged Fibonacci generator using multiplication  ::
+     :: passes all tests except those dependent on the last bit, since  ::
+     :: the output integers are always odd.  Adding the MWC sequence    ::
+     :: provides a proper mix of trailing bits. The resulting combinat- ::
+     :: ion in ULTRA seems to pass all tests and has a very long period.::
+     :: That period is  3*2^96*(30903*2^15-1),  about 2^127.5           ::
+     :: ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     :: This program creates a binary file of integers from the  ::
+     :: subtract-with-borrow random number generator             ::
+     ::          x(n)=x(n-24)-x(n-37) - borrow mod 2^32          ::
+     :: combined with the multiply-with-carry generator          ::
+     ::          y(n)=30903*y(n-1) + carry  mod 2^16.            ::
+     :: The period of the composite is                           ::
+     ::    (2^1178-2^762)(30903*2^15-1),  about 2^1208 or 10^364.::
+     ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     ::  This program creates the binary file EXCONG?.32 containing   ::
+     ::  11+ megabytes of 32-bit integers from an extended congruent- ::
+     ::  generator.  You have your choice of four:                    ::
+     ::   1:  x(n)=1176*x(n-1)+1476*x(n-2)+1776*x(n-3) mod 2^32-5     ::
+     ::   2:  x(n)=2**13*[x(n-1)+x(n-2)+x(n-3)] mod 2^32-5            ::
+     ::   3:  x(n)=2001*x(n-1)+1998*x(n-2)+1995*x(n-3) mod 2^35-849   ::
+     ::   4:  x(n)=2**19*[x(n-1)+x(n-2)+x(n-3)] mod 2^35-1629         ::
+     ::  The period of these generators is the modulus cubed minus 1, ::
+     ::  about 2^96, for any 3 seeds not all zero.   The recursion is ::
+     ::  implemented in double precision, with the result converted   ::
+     ::  to a 32-bit integer.  Notice that choices 2 and 4 are well   ::
+     ::  suited for implementations that avoid multiplication: adding ::
+     ::  13 or 19 to the exponent of a double precision sum.   Since  ::
+     ::  all four choices seem to pass all tests, 2) and 4) may be    ::
+     ::  preferable.  Try them yourself.                              ::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     ::         The random number generator SUPERDUPER                ::
+     ::  This program creates the binary file SUPRDUPR.32, containing ::
+     :: 11+ megabytes of integers made by adding the results of two   ::
+     :: random number generators, congruential and shift register.    ::
+     :: The two generators are                                        ::
+     ::           x <--- 69069*x+oddconstant mod 2^32        and      ::
+     ::           y <--- y(I+L^13)(I+R^17)(I+L^5),                    ::
+     :: where y is viewed as a binary vector. The transformation is   ::
+     ::        y <-- yT, with T the 32x32 binary matrix               ::
+     :: T=(I+L^13)(I+R^17)(I+L^5) and L, R are matrices that effect a ::
+     :: shift of 1 left or 1 right.  The transformation is readily    ::
+     :: done with shifts and exclusive or's.  The period of the x's   ::
+     :: is 2^32 for any initial seed and that for the y's is 2^32-1   ::
+     :: for any seed not zero.  So the period of  SUPERDUPER is       ::
+     ::           2^64-2^32 = 18,446,744,069,414,584,320.             ::
+     :: You will be prompted for two seeds.                           ::
+     :: You will also be prompted to choose the method for combining  ::
+     :: the two sequences: addition (enter +), exclusive-or (enter x) ::
+     :: ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     :: This program creates a binary file of integers from a specified ::
+     :: subtract-with-borrow random number generator.   Structures of   ::
+     :: such generators are much like those of lagged Fibonacci generat-::
+     :: ors x(n)=x(n-s)-x(n-r) mod m, except that one forms             ::
+     :: x(n)=x(n-s)-x(n-r)-c mod m, where c is the `borrow': 0 if the   ::
+     :: subtraction produced a positive result, and 1 if an m had to be ::
+     :: borrowed and added to the difference to make a positive result. ::
+     :: With proper choice of the lags, tremendously long periods can   ::
+     :: be attained.  But performance on tests is much the same as for  ::
+     :: lagged Fibonacci, as SWB sequences behave locally much like lag-::
+     :: ged Fibonacci using subtraction.  There are also add-with-carry ::
+     :: generators x(n)=x(n-r)+x(n-s)+carry mod m that use addition,    ::
+     :: with the `carry' set to 1 or 0, depending on whether m had to be::
+     :: subtracted to give a positive result mod m. For a full descript-::
+     :: tion, see Marsaglia and Zaman, Ann. Applied Prob., v1, no3 1991 ::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     :: ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ::
+     ::   This program creates a binary file  containing 11+ megabytes  ::
+     ::  of 32-bit random integers from a congruential generator,       ::
+     ::            x(n)=a*x(n-1)+b mod m                                ::
+     ::  You will be prompted to choose a,b and m, the latter in the    ::
+     ::  form m=2^r+s.   If r<=31 then r-bit integers will be left-     ::
+     ::  justified (shifted left)  to meet DIEHARD requirements.        ::
+     ::  If r>32 then the recursion is carried out in double precision  ::
+     ::  and the result sent to the file as the integer part of  c*x,   ::
+     ::  where c is the ratio 2.^32/m.  In addition, this program will  ::
+     ::  display a (line-printer) plot of the 2-lattice of the chosen   ::
+     ::  congruential generator.                                        ::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+      :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+      ::  This program creates the binary file ran2.32 containing some   ::
+      ::  11 megabytes of integers from the generator RAN2 in Numerical  ::
+      ::  Recipes.  See Press and Teukolsky, "Portable Random Number     ::
+      ::  Generators", Computers in Physics, v 6, n 2, 522:524 1992.     ::
+      ::  See also "Some portable very-long-period random number gener-  ::
+      ::  ators", v 8 n 1, 1994 by Marsaglia and Zaman, that points out  ::
+      ::  shortcomings, suggested improvements and alternatives to RAN2. ::
+      ::  The Numerical Recipes version produces only 31 bit integers.   ::
+      ::  They are left-adjusted, that is, shifted left 1, before being  ::
+      ::  written to the binary file ran2.32, as several DIEHARD tests   ::
+      ::  emphasize the leading bits.  But that means that all integers  ::
+      ::  in ran2.32 have trailing bit=0, so that tests that use bit 32  ::
+      ::  (DIEHARD numbers bits from left to right, 1 to 32) will yield  ::
+      ::  spectacular failures.                                          ::
+      :: ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ::
+      :: ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ::
+      ::  This program creates a binary file with 11+ megabytes of 32-   ::
+      ::  bit integers from a specified shift register generator.  You   ::
+      ::  will be prompted to choose the shifts and whether to generate  ::
+      ::  31- or 32-bit integers.  If 31 bits are chosen, the resulting  ::
+      ::  integers will be left-justified (shifted left 1) before being  ::
+      ::  written to the output file you name, since many of DIEHARD's   ::
+      ::  tests emphasize leading bits of random integers.  That means,  ::
+      ::  of course, that the generator is likely to fail tests that     ::
+      ::  depend, in any significant way, on the rightmost bit of a 32-  ::
+      ::  bit random integer.                                            ::
+      :: ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     ::         The system generator in Microsoft Fortran             ::
+     ::  This program creates the binary file MSRAN.32,  containing   ::
+     :: 11+ megabytes of integers made from the Microsoft Fortran     ::
+     :: system generator.  It is the congruential generator           ::
+     ::              x(n)=48271*x(n-1) mod 2^31-1                     ::
+     :: That multiplier has been suggested as better than Lehmer's    ::
+     :: original 7^5=16807.  Unfortunately, only reals on [0,1) are   ::
+     :: provided by the generator, from division by 2^31. The origin- ::
+     :: al congruential integer cannot be recovered by multiplying by ::
+     :: 2^31---several bits may be lost.  So this program creates the ::
+     :: original sequence of 31-bit integers.  They are left-shifted  ::
+     :: one position to conform with DIEHARD's requirements.  Thus    ::
+     :: they fail tests influenced by the rightmost bit, always 0.    ::
+     :: Other multipliers suggested for this modulus are 16807 and    ::
+     :: 314159269.  Try them, by choosing the congruential generator  ::
+     :: in  MAKEWHAT.EXE                                              ::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+     :: This program creates a binary file of integers from a specified ::
+     :: lagged Fibonacci generator, x(n)=x(n-r) op x(n-s), with op one  ::
+     :: of the four operations +,-,* mod 2^32 and xor.   You choose the ::
+     :: two lags r and s from a list that provides long periods         ::
+     :: and choose the operation +,-,*  mod 2^32  or exclusive-or: xor. ::
+     :: For simpler program logic, choice of operation is indicated by  ::
+     :: an integer:      1 for +, 2 for -, 3 for *, 4 for xor.          ::
+     :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+       :: ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ::
+       ::  This program creates a file, INVCONG.32, with 11+ megabytes  ::
+       ::  of 32-bit integers from an `inverse congruential' generator, ::
+       ::  described by Eichenauer-Herrmann in International Statist.   ::
+       ::  Review v60, 167-176 and earlier papers.                      ::
+       ::  The attraction of this generator seems to be the theory be-  ::
+       ::  hind it; as a random number generator it is not very good.   ::
+       ::  It takes from twenty to fifty times as long as much better   ::
+       ::  generators and fails many of the tests in DIEHARD. The first ::
+       ::  12-16 bits seem to be good, but trailing bits are as bad or  ::
+       ::  worse than those from an ordinary congruential RNG mod 2^32. ::
+       ::  Try it yourself. You will be prompted for parameters a and b ::
+       ::  and a seed.  Make sure `a' mod 4 is 1 and `b' is odd.        ::
+       :: ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ::
+
+

@@ -1,0 +1,50 @@
+
+This CDROM contains 4.8 billion random bits in sixty 10-megabyte files,
+                 bit.01, bit.02,...,bit.60.
+They are a combination of some of the best deterministic random number 
+generators with three commercial devices that claim to produce true randomness.
+There are three approx. 10 meg  files of typical output from those devices:
+              canada.bit   germany.bit   calif.bit.
+They fail to meet the stringent requirements of DIEHARD: a battery of tests
+of randomness, files for which are also included on this CDROM.
+
+But the sixty 10-meg files bit.01,...,bit.60 seem to pass all tests of
+randomness and independence, and they are offered here as a source for
+those doing serious Monte Carlo work, who absolutely positively have to have
+a reliable source of random bits.
+
+Details of the method for producing the bits are in the postscript file
+cdmake.ps.  There are three other postscript files that give further 
+information.
+
+The file structure of this CDROM is simple:  the root directory with
+the sixty files of what I claim to be virtually unassailable sources
+of random bits, and the three files of output from physical devices
+for which claims of perfect randomness have been made, but DIEHARD refutes.
+
+In addition, the root directory has four subdirectories:
+
+              Subdirectory        Contents
+                pscript         Four postscript files,
+                                 cdmake.ps keynote.ps monkey.ps mwc1.ps
+                                describing the making of this disk and
+                                background theory for tests and RNG's.
+
+                 dos            Files for describing and running DIEHARD
+                                on 386/486+ PC's under dos.
+
+                 sun            Files for describing and running DIEHARD
+                                on Sun platforms under unix.
+
+                 linux          Files for describing and running DIEHARD
+                                on i486+ sytems under linux.               
+
+                 source         Source files for DIEHARD, in C, translated
+                                from Fortran files by f2c.   The DIEHARD
+                                battery of tests can be constructed from
+                                them, for other platforms.
+                 
+
+
+
+
