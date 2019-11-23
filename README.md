@@ -43,5 +43,6 @@ In addition, the root directory has four subdirectories:
 ## COPYRIGHT NOTICE  
 From the CD-ROM:
 
-    Research sponsored by the National Science Foundation (Grants DMS-8807976 and DMS-9206972), copyright 1995 George Marsaglia
+    Research sponsored by the National Science Foundation (Grants DMS-8807976 and DMS-9206972),
+    copyright 1995 George Marsaglia
 
