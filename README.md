@@ -13,7 +13,7 @@ Included in this repo:
 
 The `Diehard` has since been updated and renamed [`Dieharder`](https://webhome.phy.duke.edu/~rgb/General/dieharder.php) by Robert G. Brown of the Duke University Physics Department.
 
-One final note: `Diehard` and it's subsequent iterations have been highly influential in statistics, cryptography, and related research. That said, software is made by humans, who often have flaws. In some of the included papers (which were part of the original CD-ROM), Marsaglia repeatedly refers to his using images of "naked ladies" as inputs to his generators as well as rap music, which he calls "black noise." This sexist and racist language should not have been acceptable to his fellow researchers in 1995 and certainly isn't today... and people wonder there aren't enough women and people of color in tech.
+One final note: `Diehard` and it's subsequent iterations have been highly influential in statistics, cryptography, and related research. That said, software is made by humans, who often have flaws. In some of the included papers (which were part of the original CD-ROM), Marsaglia repeatedly refers to his using images of "naked ladies" as inputs to his random number generators as well as rap music, which he calls "black noise." This sexist and racist language should not have been acceptable to his fellow researchers in 1995 and certainly isn't today... and people wonder there aren't enough women and people of color in tech.
 
 
 ## ORIGINAL README  
