@@ -6,11 +6,11 @@ In 1995, [George Marsaglia](https://en.wikipedia.org/wiki/George_Marsaglia), a p
 This re-creation of the 1995 CD-ROM comes mainly from the [Wayback Machine archive of Marsaglia's FTP site](https://web.archive.org/web/20160119150146/http://stat.fsu.edu/pub/diehard/cdrom/) at FSU. But since that archive is difficult to download in bulk, I've provided it here for historical research and general random number digging.
 
 Included in this repo:  
-* `CD-ROM`: the full contents of the original CD-ROM  
-* `CDInCase.png`: a photo (the only one I could find) of the original CD in its case  
-* `ConvertRandomNumberFiles.py`: a Python script for converting the CD's binary random number files into a more easily-used format  
-* `Downloader.py`: the Python script used to download the FTP archive  
-* `Label.gif`: label design used in the original release  
+* **`CD-ROM`:** the full contents of the original CD-ROM  
+* **`CDInCase.png`:** a photo (the only one I could find) of the original CD in its case  
+* **`ConvertRandomNumberFiles.py`: a Python script for converting the CD's binary random number files into a more easily-used format  
+* **`Downloader.py`:** the Python script used to download the FTP archive  
+* **`Label.gif`:** label design used in the original release  
 
 The `Diehard` has since been updated and renamed [`Dieharder`](https://webhome.phy.duke.edu/~rgb/General/dieharder.php) by Robert G. Brown of the Duke University Physics Department.
 
