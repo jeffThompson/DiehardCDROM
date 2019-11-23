@@ -7,7 +7,7 @@ This re-creation of the CD-ROM comes mainly from the [Wayback Machine archive of
 Included in this repo:  
 * **`CD-ROM`:** the full contents of the original CD-ROM  
 * **`CDInCase.png`:** a photo (the only one I could find) of the original CD in its case  
-* **`ConvertRandomNumberFiles.py`: a Python script for converting the CD's binary random number files into a more easily-used format  
+* **`ConvertRandomNumberFiles.py`:** a Python script for converting the CD's binary random number files into a more easily-used format  
 * **`Downloader.py`:** the Python script used to download the FTP archive  
 * **`Label.gif`:** label design used in the original release  
 
