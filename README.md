@@ -1,5 +1,5 @@
-# THE MARSAGLIA RANDOM NUMBER CDROM
-## Including the Diehard Battery of Tests of Randomness
+## THE MARSAGLIA RANDOM NUMBER CDROM
+### Including the Diehard Battery of Tests of Randomness
 
 In 1995, [George Marsaglia](https://en.wikipedia.org/wiki/George_Marsaglia), a professor in the Department of Statistics at Florida State University created [`Diehard`](https://en.wikipedia.org/wiki/Diehard_tests), a set of statistical tests to determine the quality of a sequence of random values. Marsaglia originally released the software on a CD-ROM, pressed in an edition of "several hundred copies" and given away for free, along with 60 files containing a total of 4.8-billion random bits, an "unassailable source for those who absolutely positively have to have a large, reliable set of random numbers of serious simulation studies."
 
